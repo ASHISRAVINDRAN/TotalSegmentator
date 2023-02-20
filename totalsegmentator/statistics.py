@@ -81,4 +81,15 @@ def get_basic_statistics_for_entire_dir(seg: np.array, ct_file:Path, file_out:Pa
     # For other people csv might be better -> not really because here only for one subject each -> use json
     with open(file_out, "w") as f:
         json.dump(stats, f, indent=4)
+
+
+def dump_label_metadata(seg: np.array, file_out: Path, quiet: bool = False):
+    metadata = {}
+    for k, mask_name in tqdm(class_map["total"].items(), disable=quiet):
+        data = seg == k  # 0.18s
+        print(mask_name, data.sum())
+        if data.sum() > 0:
+            metadata[k] = mask_name
+    with open(file_out, "w") as f:
+        json.dump(metadata, f, indent=4)
     
