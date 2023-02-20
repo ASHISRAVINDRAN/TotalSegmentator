@@ -249,6 +249,13 @@ def main():
         get_radiomics_features_for_entire_dir(args.input, args.output, stats_dir / "statistics_radiomics.json")
         if not quiet: print(f"  calculated in {time.time()-st:.2f}s")
 
+    if not quiet: print("Calculating Metadata by Ashis...")
+    st = time.time()
+    stats_dir = args.output.parent if args.ml else args.output
+    dump_label_metadata(seg, stats_dir / "metadata.json", quiet)
+    # get_radiomics_features_for_entire_dir(args.input, args.output, args.output / "statistics_radiomics.json")
+    if not quiet: print(f"  calculated in {time.time() - st:.2f}s")
+
 
 if __name__ == "__main__":
     main()
